@@ -14,16 +14,15 @@ const mongoUri = 'mongodb://127.0.0.1:27017/tabi3';
   }, {collection: 'users'});
   exports.User =  mongoose.model('User', UserSchema);
 
-
   const BlogSchema = new mongoose.Schema({
     _id: {
       type: mongoose.Schema.Types.ObjectId,
-      default: mongoose.Types.ObjectId
+      auto: true,
+      required: true,
     },
     created: {type: Date, required: true},
-    title: {type: String},
+    // title: {type: String},
     content: {type: String, required: true},
-    author: {type: String},
-  })
-
+    author: {type: String}
+  }, {collection: 'blogs'});
   exports.Blog = mongoose.model('Blog', BlogSchema);

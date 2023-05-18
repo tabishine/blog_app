@@ -74,45 +74,28 @@ app.post('/createpost', (req, res, next) => {
 
 
 //update blog by id
-app.put('/updatepost/:id', (req, res) => {
-  const postId = req.params._id;
-  const updateData = {
-    created: req.body.created,
-    content: req.body.content,
-    author: req.body.author,
-  };
-  console.log("postId:", postId); 
-  dataBase.Blog.findById(postId)
-  .then((blog) => {
+app.put('/updatepost/:id', async (req, res) => {
+  try {
+    const postId = req.params.id;
+    const updateData = {
+      created: req.body.created,
+      content: req.body.content,
+      author: req.body.author,
+    };
+    console.log("postId:", postId);
+    const blog = await dataBase.Blog.findById(postId);
     console.log("blog:", blog); // Check the retrieved blog document
-    dataBase.Blog.findByIdAndUpdate(postId, updateData, { new: true })
-      .then((updatedBlog) => {
-        console.log("updatedBlog:", updatedBlog); // Check the updated blog document
-        if (!updatedBlog) {
-          return res.status(404).json({ success: false, error: "Blog post not found" });
-        }
-        res.json({ success: true, updatedBlog });
-      })
-      .catch((error) => {
-        res.status(500).json({ success: false, error: error.message });
-      });
-  })
-  .catch((error) => {
+    if (!blog) {
+      return res.status(404).json({ success: false, error: "Blog post not found" });
+    }
+    const updatedBlog = await dataBase.Blog.findByIdAndUpdate(postId, updateData, { new: true });
+    
+    console.log("updatedBlog:", updatedBlog); // Check the updated blog document
+    res.json({ success: true, updatedBlog });
+  } catch (error) {
     res.status(500).json({ success: false, error: error.message });
-  });
+  }
 });
-
-
-
-
-
-
-
-
-
-
-
-
 
 //delete blog by id
 // app.delete('/deletepost/:id', (req, res, next) => {
