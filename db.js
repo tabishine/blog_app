@@ -17,7 +17,6 @@ const mongoUri = 'mongodb://127.0.0.1:27017/tabi3';
   const BlogSchema = new mongoose.Schema({
     _id: {
       type: mongoose.Schema.Types.ObjectId,
-      auto: true,
       required: true,
     },
     created: {type: Date, required: true},

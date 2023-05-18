@@ -77,26 +77,28 @@ app.post('/createpost', (req, res, next) => {
 app.put('/updatepost/:id', async (req, res) => {
   try {
     const postId = req.params.id;
+    const user = req.user.id;
     const updateData = {
       created: req.body.created,
       content: req.body.content,
-      author: req.body.author,
     };
     console.log("postId:", postId);
-    const blog = await dataBase.Blog.findById(postId);
+    const blog = await dataBase.Blog.findById(postId).exec();
     console.log("blog:", blog); // Check the retrieved blog document
-    if (!blog) {
-      return res.status(404).json({ success: false, error: "Blog post not found" });
-    }
-    const updatedBlog = await dataBase.Blog.findByIdAndUpdate(postId, updateData, { new: true });
-    
+    if (user === blog.user.toString()) {
+      const updatedBlog = await dataBase.Blog.findByIdAndUpdate(postId, 
+        updateData, { 
+          new: true,
+        }
+      ).exec();
     console.log("updatedBlog:", updatedBlog); // Check the updated blog document
     res.json({ success: true, updatedBlog });
-  } catch (error) {
-    res.status(500).json({ success: false, error: error.message });
+  } else {
+    res.status(400).json({success: false,error: "You are not authorized" });
+  } } catch(error) {
+    res.status(400).json({success: false, error: error.message})
   }
 });
-
 //delete blog by id
 // app.delete('/deletepost/:id', (req, res, next) => {
 //  const postId = req.params._id;
