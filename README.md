@@ -43,12 +43,21 @@ Make sure you have the following installed on your machine:
 npm install
 
 
-4. Set up the environment variables:  Create a .env file in the project root.
+
+
+
+4. Set up the environment variables:  
+- Create a .env file in the project root.
 - Define the following environment variables in the .env file:
 - MONGODB_URI: The connection URL for your MongoDB database.
 - JWT_SECRET: A secret key for JWT token generation and verification.
-5. Start the application: ```bash
+
+5. Start the application: 
+
+```bash
 npm start
+
+
 6. Access the application in your browser at http://localhost:3000.
 
 ## API Routes
