@@ -41,7 +41,7 @@ Make sure you have the following installed on your machine:
 npm start
 6. Access the application in your browser at http://localhost:3000.
 
-API Routes
+## API Routes
 
 The application exposes the following API routes:
 
