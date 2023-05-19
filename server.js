@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken');
 const bodyParser = require('body-parser');
 const dataBase = require('./db');
 const bcrypt = require('bcrypt');
+const { isObjectIdOrHexString } = require('mongoose');
 const app = Express();
 
 
@@ -72,12 +73,12 @@ app.post('/createpost', (req, res, next) => {
   });
 });
 
-
 //update blog by id
+
 app.put('/updatepost/:id', async (req, res) => {
   try {
     const postId = req.params.id;
-    const user = req.user.id;
+    const user = req.user;
     const updateData = {
       created: req.body.created,
       content: req.body.content,
@@ -85,7 +86,7 @@ app.put('/updatepost/:id', async (req, res) => {
     console.log("postId:", postId);
     const blog = await dataBase.Blog.findById(postId).exec();
     console.log("blog:", blog); // Check the retrieved blog document
-    if (user === blog.user.toString()) {
+    if (user === blog.user) {
       const updatedBlog = await dataBase.Blog.findByIdAndUpdate(postId, 
         updateData, { 
           new: true,
@@ -99,20 +100,32 @@ app.put('/updatepost/:id', async (req, res) => {
     res.status(400).json({success: false, error: error.message})
   }
 });
+
 //delete blog by id
-// app.delete('/deletepost/:id', (req, res, next) => {
-//  const postId = req.params._id;
-//  dataBase.Blog.findByIdAndDelete(postId)
-//  .then((deletedBlog) => {
-//   if(!deletedBlog){
-//     return res.status(404).json({success: false, error: "Blog post not found"});
-//   }
-//   res.json({success: true, message: "Blog post deleted successfully "});
-//  })
-//  .catch((error) => {
-//   res.status(500).json({success: false, error: error.message});
-//  });
-// });
+
+app.delete('/deletepost/:id', async (req, res) => {
+  try{
+    const postId = req.params.id;
+    const user = req.user;
+    const deleteData = {
+      created: req.body.created,
+      content: req.body.content,
+      author: req.body.author,
+    };
+    console.log("postId:", postId);
+    const blog = await dataBase.Blog.findById(postId).exec();
+    console.log("blog:", blog);
+    if(user === blog.user){
+      const deleteBlog = await dataBase.Blog.findByIdAndDelete(postId, 
+        deleteData
+      ).exec();
+      res.json({success: true, deleteBlog});
+      } else {
+        res.status(400).json({success: false, error: "You are not authorized"});
+      } } catch(error){
+        res.status(400).json({success: false, error: error.message})
+      }
+});
 
 //check token validation
 // function fetchUserByToken(req){
