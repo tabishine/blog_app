@@ -37,5 +37,6 @@ Make sure you have the following installed on your machine:
 - Define the following environment variables in the .env file:
 - MONGODB_URI: The connection URL for your MongoDB database.
 - JWT_SECRET: A secret key for JWT token generation and verification.
-5. Start the application: npm start
+5. Start the application: 
+npm start
 6. Access the application in your browser at http://localhost:3000.
