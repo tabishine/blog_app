@@ -46,7 +46,12 @@ API Routes
 The application exposes the following API routes:
 
 POST `/register` Register a new user.
+
 POST `/login` Authenticate a user and generate a JWT token.
+
 POST `/createpost` Create a new blog post.
+
 PUT `/updatepost/:id` Update a specific blog post by ID.
+
 DELETE `/deletepost/:id` Delete a specific blog post by ID.
+
