@@ -31,10 +31,7 @@ Make sure you have the following installed on your machine:
 
 2. Change into the project directory: 
 
-
- ```bash
  cd blog-app
- 
  
 3. Install the dependencies: 
 
