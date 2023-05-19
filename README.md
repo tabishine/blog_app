@@ -30,11 +30,18 @@ Make sure you have the following installed on your machine:
 
 
 2. Change into the project directory: 
+
+
  ```bash
  cd blog-app
+ 
+ 
 3. Install the dependencies: 
-```bash npm 
-install
+
+
+```bash 
+npm install
+
 
 4. Set up the environment variables:  Create a .env file in the project root.
 - Define the following environment variables in the .env file:
