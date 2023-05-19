@@ -38,7 +38,6 @@ Make sure you have the following installed on your machine:
  
 3. Install the dependencies: 
 
-```bash 
 npm install
 
 4. Set up the environment variables:  
@@ -49,11 +48,10 @@ npm install
 
 5. Start the application: 
 
-```bash
 npm start
 
-
 6. Access the application in your browser at http://localhost:3000.
+
 
 ## API Routes
 
